@@ -24,15 +24,18 @@ app.get('', (req, res) => {
 	
 	const options = {
 		url: 'https://mahx-task-manager.herokuapp.com/tasks',
+		headers: {
+			Authorization: 'Bearer ' + req.cookies.authToken
+		}
 	}
 	request.get(options, (err, response, body) => {
 		console.log(req.cookies.authToken)
 		console.log('E:', err)
 		console.log('B:', body)
-		console.log('T:', body.tasks)
+		console.log('U:', req.user)
 		const tasks = body
 		res.render('index', {title: 'Task Manager', name, tasks})
-	}).auth(null, null, null, req.cookies.authToken)
+	})
 })
 
 app.post('/login', async (req, res) => {
