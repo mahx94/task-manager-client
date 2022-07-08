@@ -8,16 +8,15 @@
 	</head>
 	<body>
 		<div class="main-content">
-			{{>header}}
+			<h1>{{title}}</h1>
 			<form action="/login" method="POST">
-				<input id="email" name="email" placeholder="email"><br>
-				<input id="password" name="password" placeholder="password"><br>
-				<button id="login">Log In</button>
+				<input name="email" placeholder="email"><br>
+				<input name="password" type="password" placeholder="password"><br>
+				<button type="submit">Log In</button>
 				<button type="submit" formaction="/signup">Create Account</button>
 			</form>
 			<p id="resMessage"></p>
 		</div>
 		{{>footer}}
-		<script src="/js/login.js"></script>
 	</body>
 </html>

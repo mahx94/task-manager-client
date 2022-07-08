@@ -1,6 +1,6 @@
 body {
 	color: #333333;
-	font-family: Arial;
+	font-family: Arial, Helvetica, sans-serif;
 	max-width: 650px;
 	margin: 0 auto;
 	padding: 0 16px;
@@ -29,7 +29,18 @@ header {
 h1 {
 	font-size: 64px;
 	font-family: Beleren;
+	margin-bottom: 48px;
+}
+
+header h1 {
+	font-size: 64px;
+	font-family: Beleren;
 	margin-bottom: 16px;
+}
+
+h3 {
+	font-style: normal;
+	margin-bottom: 8px;
 }
 
 header a {
@@ -55,4 +66,105 @@ button {
 	color: white;
 	padding: 8px;
 	margin: 2px 0 4px;
+}
+
+#nav_table {
+	border-collapse: collapse;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+#nav_table td {
+	padding: 0;
+	width: 80%;
+}
+
+#nav_table td:last-child {
+	text-align: right;
+}
+
+#task_list {
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#task_list td {
+	border-bottom: 1px solid #ccc;
+	padding: 16px;
+	padding-top: 12px;
+	padding-bottom: 24px;
+}
+
+#task_list td:nth-child(even){
+	text-align: center;
+	width: 64px;
+}
+
+#task_list th {
+	border-top: 1px solid #ccc;
+	background-color: #eee;
+	padding: 24px;
+	padding-top: 12px;
+	padding-bottom: 8px;
+	text-align: left;
+}
+
+#task_list th:nth-child(even){
+	text-align: center;
+	width: 64px;
+}
+
+.done {
+	color: green
+}
+
+.todo {
+	color: red;
+}
+
+#new_task {
+	border-collapse: collapse;
+	margin-bottom: 64px;
+	width: 100%;
+}
+
+#new_task td {
+	padding: 0 0 2px 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #888;
+}
+
+#new_task td:nth-child(even){
+	text-align: center;
+	width: 100px;
+	line-height: 20px;
+}
+
+#new_task input {
+	border: 1px solid #ccc;
+	padding: 8px;
+	margin: 0;
+	width: 96%;
+}
+
+#new_task button {
+	cursor: pointer;
+	border: 1px solid #888;
+	background: #888;
+	color: white;
+	padding: 8px;
+	margin: 0;
+	width: 100%;
+}
+
+#new_task textarea {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	border: 1px solid #ccc;
+	padding: 8px;
+	margin: 0;
+	width: 96%;
 }

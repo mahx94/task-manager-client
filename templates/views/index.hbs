@@ -9,7 +9,22 @@
 	<body>
 		<div class="main-content">
 			{{>header}}
-			{{tasks}}
+			<h3>Create new task</h3>
+			<form action="/task/create" method="POST">
+				<table id="new_task">
+					<tr><td><input name="name" placeholder="Task Name"></td><td><button type="submit">Create Task</button></td></tr>
+					<tr><td><textarea name="description" placeholder="Describe Your Task"></textarea></td><td><label for="compleated">Compleated?</label><br><input type="checkbox" name="compleated" value="true"></td></tr>
+				</table>
+			</form>
+			<h3>Your Tasks</h3>
+			<table id="task_list">
+				{{#each tasks}}
+				<tr><th>{{this.name}}</th><th>{{#if this.compleated}}<div class="done">Done</div>{{else}}<div class="todo">Do This</div>{{/if}}</th></tr>
+				<tr><td>{{this.description}}</td><td><a href="/task/{{this._id}}">Edit</a></td></tr>
+				{{else}}
+				<tr><td>There are no tasks here.</td></tr>
+				{{/each}}
+			</table>
 		</div>
 		{{>footer}}
 	</body>
