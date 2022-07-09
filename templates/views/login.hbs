@@ -9,14 +9,15 @@
 	<body>
 		<div class="main-content">
 			<h1>{{title}}</h1>
-			<form action="/login" method="POST">
+			<form action="/login" method="POST" onsubmit="return validatePassword()">
 				<input name="email" placeholder="email"><br>
-				<input name="password" type="password" placeholder="password"><br>
+				<input name="password" id="password" type="password" placeholder="password"><br>
 				<button type="submit">Log In</button>
 				<button type="submit" formaction="/signup">Create Account</button>
 			</form>
-			<p id="resMessage"></p>
+			<p id="val_err"></p>
 		</div>
 		{{>footer}}
+		<script src="\js\profile_validation.js"></script>
 	</body>
 </html>

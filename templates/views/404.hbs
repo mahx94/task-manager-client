@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>404</title>
+		<link rel="icon" href="/img/star.png">
+		<link rel="stylesheet" href="/css/styles.css">
+	</head>
+	<body>
+		<div class="main-content">
+			{{#if authenticated}}{{>header}}
+			{{else}}<h1>{{title}}</h1>
+			{{/if}}
+			<p>Page not found.</p>
+		</div>
+		{{>footer}}
+	</body>
+</html>

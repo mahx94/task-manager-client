@@ -9,7 +9,7 @@
 	<body>
 		<div class="main-content">
 			{{>header}}
-			<form action="/me/update" method="POST">
+			<form action="/me/update" method="POST" onsubmit="return validatePasswords()">
 				<table id="user"><tr>
 					<td>
 						{{#if avatar}} <img src="https://mahx-task-manager.herokuapp.com/users/{{user._id}}/avatar">
@@ -20,15 +20,18 @@
 						<input name="name" placeholder="Full Name" value="{{user.name}}"><br>
 						<input name="email" placeholder="Email Address" value="{{user.email}}"><br>
 						<input name="age" type="number" id="number" placeholder=" Your Age" {{#if user.age}}value="{{user.age}}"{{/if}}><br>
-						<input name="password" type="password" placeholder="Change Password"><br>
-						<input name="re-password" type="password" placeholder="Repeat Password"><br>
+						<input name="password" id="password" type="password" placeholder="Change Password">
+						<input name="re_password" id="re_password" type="password" placeholder="Repeat Password">
 						<button type="submit" formaction="/me/avatar">Set Profile Picture</button>
 					</td>
 				</tr></table>
-				<div class="center-content"><button type="submit">Update Profile</button>
+				<div class="center-content"><h3 id="val_err"></h3>
+					<button type="submit">Update Profile</button>
+				<br><button type="submit" formaction="">Disconnect All Devices</button>
 				<div id="del_button"><button type="submit" formaction="/me/delete">Delete Account</button></div></div>
 			</form>
 		</div>
 		{{>footer}}
+		<script src="\js\profile_validation.js"></script>
 	</body>
 </html>

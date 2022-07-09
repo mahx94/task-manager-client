@@ -25,11 +25,15 @@ app.get('', (req, res) => {
 
 	request.get('https://mahx-task-manager.herokuapp.com/tasks', (err, response, body) => {
 		if (err) return console.log(err)
-		if (body.error) return console.log(body.error)
+		if (body.error) return console.log(body)
 		const tasks = JSON.parse(body)
 		res.render('index', {title: 'Task Manager', name, tasks})
 	}).auth(null, null, true, req.cookies.authToken)
 })
+
+// TODO
+app.get('filter', (req, res) => {})
+
 
 app.get('/me', (req, res) => {
 	if (!req.cookies.authToken) return res.redirect(403, '/')
@@ -49,11 +53,45 @@ app.get('/me', (req, res) => {
 	}).auth(null, null, true, req.cookies.authToken)
 })
 
-app.post('/me/update', (req, res) => {})
+app.post('/me/update', (req, res) => {
+	if (!req.cookies.authToken) return res.redirect(403, '/')
+	
+	const body = {}
+	const allowedUpdates = ['name', 'email', 'password', 'age']
+	allowedUpdates.forEach((update) => { if (req.body[update]) body[update] = req.body[update] })
 
-app.post('/me/delete', (req, res) => {})
+	const options = {
+		url: 'https://mahx-task-manager.herokuapp.com/users/me',
+		json: true,
+		body
+	}
 
+	request.patch(options, (err, response) => {
+		if (err) return console.log(err)
+		else if (response.statusCode === 200) res.status(203).redirect('/')
+		else console.log(response.body)
+	}).auth(null, null, true, req.cookies.authToken)
+})
+
+
+app.post('/me/delete', (req, res) => {
+	if (!req.cookies.authToken) return res.redirect(403, '/')
+
+	request.delete('https://mahx-task-manager.herokuapp.com/users/me', (err, response, body) => {
+		if (err) console.log(err)
+		else if (response.statusCode === 200) {
+			const user = JSON.parse(body)
+			res.clearCookie('authToken')
+			return res.render('goodbye', { title: 'Goodbye', name, user })
+			//return res.redirect('/')
+		} else console.log(response.body)
+		res.redirect('/me', response.statusCode)
+	}).auth(null, null, true, req.cookies.authToken)
+})
+
+// TODO 
 app.post('/me/avatar', (req, res) => {})
+
 
 app.post('/login', (req, res) => {
 
@@ -71,7 +109,7 @@ app.post('/login', (req, res) => {
 		else if (response.statusCode === 200) {
 			res.cookie('authToken', body.token)
 			res.redirect('/')
-		} else console.log(body)
+		} else res.status(400).redirect('/')
 	})
 })
 
@@ -107,6 +145,10 @@ app.get('/logout', (req, res) => {
 		} else console.log(response.body)
 	}).auth(null, null, true, req.cookies.authToken)
 })
+
+// TODO
+app.post('logout/all', (req, res) => {})
+
 
 app.post('/task/create', (req, res) => {
 	if (!req.cookies.authToken) return res.redirect(403, '/')
@@ -169,6 +211,11 @@ app.post('/delete/:id', (req, res) =>{
 		else if (response.statusCode === 200) res.redirect('/')
 		else console.log(body)
 	}).auth(null, null, true, req.cookies.authToken)
+})
+
+app.get('*', (req, res) => {
+	if (!req.cookies.authToken) return res.render('404', {title: "404", name})
+	res.render('404', {title: "404", name, authenticated: true})
 })
 
 
