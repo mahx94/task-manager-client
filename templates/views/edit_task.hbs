@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Edit Task</title>
+		<link rel="icon" href="/img/star.png">
+		<link rel="stylesheet" href="/css/styles.css">
+	</head>
+	<body>
+		<div class="main-content">
+			{{>header}}
+			<form action="/task/{{task._id}}" method="POST">
+				<table id="task">
+					<tr><td><input name="name" placeholder="Task Name" value="{{task.name}}"></td><td><button type="submit">Update</button></td></tr>
+					<tr><td><textarea name="description" placeholder="Describe Your Task">{{task.description}}</textarea></td><td><label for="compleated">Compleated?</label><br><input type="checkbox" name="compleated" value="true" {{#if task.compleated}}checked{{/if}}></td></tr>
+				</table>
+				<div id="del_button"><button type="submit" formaction="/delete/{{task._id}}">Delete Task</button></div>
+			</form>
+		</div>
+		{{>footer}}
+	</body>
+</html>

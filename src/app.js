@@ -31,6 +31,30 @@ app.get('', (req, res) => {
 	}).auth(null, null, true, req.cookies.authToken)
 })
 
+app.get('/me', (req, res) => {
+	if (!req.cookies.authToken) return res.redirect(403, '/')
+
+	request.get('https://mahx-task-manager.herokuapp.com/users/me', (err, response, body) => {
+		if (err) return console.log(err)
+		else if (response.statusCode === 200) {
+			const user = JSON.parse(body)
+			const url = 'https://mahx-task-manager.herokuapp.com/users/' + user._id + '/avatar'
+
+			request.get(url, (err, response, avatar) => {
+				if (response.statusCode === 200) res.render('profile', {title: 'My Profile', name, user, avatar})
+				else return res.render('profile', {title: 'My Profile', name, user})
+			}).auth(null, null, true, req.cookies.authToken)
+
+		} else console.log(body)
+	}).auth(null, null, true, req.cookies.authToken)
+})
+
+app.post('/me/update', (req, res) => {})
+
+app.post('/me/delete', (req, res) => {})
+
+app.post('/me/avatar', (req, res) => {})
+
 app.post('/login', (req, res) => {
 
 	const options = {
@@ -52,10 +76,25 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/signup', (req, res) => {
-	// TODO: Create actual signup router
-	console.log('Email:', req.body.email)
-	console.log('Pass:', req.body.password)
-	res.redirect('/')
+	var name = req.body.email.replace(/@.*/g, '')
+	name = name.replace(/[._]/g, ' ')
+	const options = {
+		url: 'https://mahx-task-manager.herokuapp.com/users',
+		json: true,
+		body: {
+			name,
+			email: req.body.email,
+			password: req.body.password
+		}
+	}
+
+	request.post(options, (err, response, body) => {
+		if (err) return console.log(err)
+		else if (response.statusCode === 201) {
+			res.cookie('authToken', body.token)
+			res.redirect('/')
+		} else console.log(body)
+	})
 })
 
 app.get('/logout', (req, res) => {
@@ -71,7 +110,6 @@ app.get('/logout', (req, res) => {
 
 app.post('/task/create', (req, res) => {
 	if (!req.cookies.authToken) return res.redirect(403, '/')
-	console.log(req.body.compleated)
 	
 	const options = {
 		url: 'https://mahx-task-manager.herokuapp.com/tasks',
@@ -91,7 +129,46 @@ app.post('/task/create', (req, res) => {
 })
 
 app.get('/task/:id', (req, res) => {
-	// TODO: Make Get Task call and create and render Edit Task view
+	if (!req.cookies.authToken) return res.redirect(403, '/')
+	request.get('https://mahx-task-manager.herokuapp.com/tasks/' + req.params.id, (err, response, body) => {
+		if (err) return console.log(err)
+		else if (response.statusCode === 200) {
+			const task = JSON.parse(body)
+			res.render('edit_task', {title: 'Edit Task', name, task})
+		} else console.log(body)
+	}).auth(null, null, true, req.cookies.authToken)
+})
+
+app.post('/task/:id', (req, res) =>{
+	if (!req.cookies.authToken) return res.redirect(403, '/')
+
+	const options = {
+		url: 'https://mahx-task-manager.herokuapp.com/tasks/' + req.params.id,
+		json: true,
+		body: {
+			name: req.body.name,
+			description: req.body.description,
+			compleated: req.body.compleated
+		}
+	}
+
+	request.patch(options, (err, response, body) => {
+		if (err) return console.log(err)
+		else if (response.statusCode === 200) res.redirect('/')
+		else console.log(body)
+	}).auth(null, null, true, req.cookies.authToken)
+})
+
+app.post('/delete/:id', (req, res) =>{
+	if (!req.cookies.authToken) return res.redirect(403, '/')
+
+	const url = 'https://mahx-task-manager.herokuapp.com/tasks/' + req.params.id
+
+	request.delete(url, (err, response, body) => {
+		if (err) return console.log(err)
+		else if (response.statusCode === 200) res.redirect('/')
+		else console.log(body)
+	}).auth(null, null, true, req.cookies.authToken)
 })
 
 

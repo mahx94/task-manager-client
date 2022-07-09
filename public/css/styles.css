@@ -14,6 +14,14 @@ body {
 	flex-grow: 1;
 }
 
+.center-content {
+	text-align: center;
+}
+
+.center-content button {
+	width: 200px;
+}
+
 footer {
 	color: #888888;
 	border-top: 1px solid #eee;
@@ -66,6 +74,16 @@ button {
 	color: white;
 	padding: 8px;
 	margin: 2px 0 4px;
+}
+
+#del_button {
+	text-align: center;
+}
+
+#del_button button {
+	background-color: red;
+	border: 1px solid red;
+	padding: 8px 16px;
 }
 
 #nav_table {
@@ -124,33 +142,33 @@ button {
 	color: red;
 }
 
-#new_task {
+#task {
 	border-collapse: collapse;
 	margin-bottom: 64px;
 	width: 100%;
 }
 
-#new_task td {
+#task td {
 	padding: 0 0 2px 0;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	color: #888;
 }
 
-#new_task td:nth-child(even){
+#task td:nth-child(even){
 	text-align: center;
 	width: 100px;
 	line-height: 20px;
 }
 
-#new_task input {
+#task input {
 	border: 1px solid #ccc;
 	padding: 8px;
 	margin: 0;
 	width: 96%;
 }
 
-#new_task button {
+#task button {
 	cursor: pointer;
 	border: 1px solid #888;
 	background: #888;
@@ -160,11 +178,33 @@ button {
 	width: 100%;
 }
 
-#new_task textarea {
+#task textarea {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	border: 1px solid #ccc;
 	padding: 8px;
 	margin: 0;
 	width: 96%;
+}
+
+#user {
+	width: 100%;
+	margin-bottom: 64px;
+}
+
+#user td {
+	text-align: center;
+	width: 50%;
+}
+
+#user td:nth-child(even) {
+	text-align: left;
+}
+
+#user input {
+	width: 200px;
+}
+
+#user button {
+	width: 218px;
 }

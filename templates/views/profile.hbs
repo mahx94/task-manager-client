@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>My Profile</title>
+		<link rel="icon" href="/img/star.png">
+		<link rel="stylesheet" href="/css/styles.css">
+	</head>
+	<body>
+		<div class="main-content">
+			{{>header}}
+			<form action="/me/update" method="POST">
+				<table id="user"><tr>
+					<td>
+						{{#if avatar}} <img src="https://mahx-task-manager.herokuapp.com/users/{{user._id}}/avatar">
+						{{else}} <img src="/img/profile.png" width="250" height="250">
+						{{/if}}
+					</td>
+					<td>
+						<input name="name" placeholder="Full Name" value="{{user.name}}"><br>
+						<input name="email" placeholder="Email Address" value="{{user.email}}"><br>
+						<input name="age" type="number" id="number" placeholder=" Your Age" {{#if user.age}}value="{{user.age}}"{{/if}}><br>
+						<input name="password" type="password" placeholder="Change Password"><br>
+						<input name="re-password" type="password" placeholder="Repeat Password"><br>
+						<button type="submit" formaction="/me/avatar">Set Profile Picture</button>
+					</td>
+				</tr></table>
+				<div class="center-content"><button type="submit">Update Profile</button>
+				<div id="del_button"><button type="submit" formaction="/me/delete">Delete Account</button></div></div>
+			</form>
+		</div>
+		{{>footer}}
+	</body>
+</html>
