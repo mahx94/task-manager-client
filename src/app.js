@@ -1,10 +1,11 @@
 const path = require('path')
+const fs = require('fs')
 const bodyParser = require('body-parser')
 const express = require('express')
 const request = require('postman-request')
 const cookieParser = require('cookie-parser')
 const hbs = require('hbs')
-const { response } = require('express')
+
 
 const app = express()
 const port = process.env.PORT
@@ -55,6 +56,24 @@ app.get('/me', (req, res) => {
 
 app.post('/me/update', (req, res) => {
 	if (!req.cookies.authToken) return res.redirect(403, '/')
+	
+	if (req.body.avatar) {
+		const options = {
+			url: 'https://mahx-task-manager.herokuapp.com/users/me/avatar',
+			headers: {
+				'Authorization': 'Bearer ' + req.cookies.authToken,
+				'Content-Type': 'multipart/form-data'
+			},
+			formData: {
+				'avatar': fs.readFileSync(req.body.avatar)
+			}
+		}
+		request.post(options, function (error, response) {
+			if (error) throw new Error(error)
+			console.log(response.body)
+		})
+	}
+	
 	
 	const body = {}
 	const allowedUpdates = ['name', 'email', 'password', 'age']

@@ -5,6 +5,7 @@
 		<title>My Profile</title>
 		<link rel="icon" href="/img/star.png">
 		<link rel="stylesheet" href="/css/styles.css">
+		<script src="https://use.fontawesome.com/3a2eaf6206.js"></script>
 	</head>
 	<body>
 		<div class="main-content">
@@ -12,8 +13,8 @@
 			<form action="/me/update" method="POST" onsubmit="return validatePasswords()">
 				<table id="user"><tr>
 					<td>
-						{{#if avatar}} <img src="https://mahx-task-manager.herokuapp.com/users/{{user._id}}/avatar">
-						{{else}} <img src="/img/profile.png" width="250" height="250">
+						{{#if avatar}} <img src="https://mahx-task-manager.herokuapp.com/users/{{user._id}}/avatar" class="portrait">
+						{{else}} <img src="/img/profile.png" class="portrait">
 						{{/if}}
 					</td>
 					<td>
@@ -22,10 +23,10 @@
 						<input name="age" type="number" id="number" placeholder=" Your Age" {{#if user.age}}value="{{user.age}}"{{/if}}><br>
 						<input name="password" id="password" type="password" placeholder="Change Password">
 						<input name="re_password" id="re_password" type="password" placeholder="Repeat Password">
-						<button type="submit" formaction="/me/avatar">Set Profile Picture</button>
+						<div id="choose_avatar"><label for="avatar">Set Profile Picture<input type="file" id="avatar" name="avatar" accept="image/png, image/jpg, image/jpeg"></label></div>
 					</td>
 				</tr></table>
-				<div class="center-content"><h3 id="val_err"></h3>
+				<div class="center-content"><h3 id="val_msg"></h3><h3 id="val_err"></h3>
 					<button type="submit">Update Profile</button>
 				<br><button type="submit" formaction="">Disconnect All Devices</button>
 				<div id="del_button"><button type="submit" formaction="/me/delete">Delete Account</button></div></div>
