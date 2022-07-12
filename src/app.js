@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+const FormData = require('form-data')
 const bodyParser = require('body-parser')
 const express = require('express')
 const request = require('postman-request')
@@ -58,17 +59,17 @@ app.post('/me/update', (req, res) => {
 	if (!req.cookies.authToken) return res.redirect(403, '/')
 	
 	if (req.body.avatar) {
-		const options = {
+		const avatarOptions = {
 			url: 'https://mahx-task-manager.herokuapp.com/users/me/avatar',
 			headers: {
 				'Authorization': 'Bearer ' + req.cookies.authToken,
 				'Content-Type': 'multipart/form-data'
 			},
 			formData: {
-				'avatar': fs.readFileSync(req.body.avatar)
+				'avatar': req.body.avatar
 			}
 		}
-		request.post(options, function (error, response) {
+		request.post(avatarOptions, function (error, response) {
 			if (error) throw new Error(error)
 			console.log(response.body)
 		})
